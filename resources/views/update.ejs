@@ -1,0 +1,24 @@
+<%- include('include/__header')%> 
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3>Update Todo</h3>
+            <div class="card-body border-0">
+                <form action="/api/todo/update/<%- todo._id %>" method="POST">
+                    <div class="input-group">
+                        <input type="text" name="name" value="<%- todo.name %>" class="form-control" placeholder="Add Todo " >
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-primary">Add Todo</button>
+                        </div>
+                      </div>
+                </form>
+              </div>
+        </div>
+    </div>
+</div>
+
+
+  
+  
+  

@@ -1,0 +1,134 @@
+<%- include('include/__header')%>    
+<section class="section-content padding-y">
+    
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="card mx-auto border-0 mt-4" >
+              <% if(messages.success) {%>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong><%= messages.success %></strong>
+                  <button type="button" class="close btn" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              <%} else if(messages.error){%>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong><%= messages.error %></strong>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              <%}%>
+              <div class="card-body border-0">
+                    <form action="/api/todo" method="POST">
+                        <div class="input-group">
+                            <input type="text" name="name" class="form-control" placeholder="Add Todo " >
+                            <div class="input-group-append">
+                              <button type="submit" class="btn btn-primary">Add Todo</button>
+                            </div>
+                          </div>
+                    </form>
+                  </div>
+            </div> 
+          </div>
+        </div>
+</section>
+
+<section class="section-content">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Created Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <tr><td colspan="4"><h5 class="text-danger">Uncompleted Task</h5></td></tr>
+                            <% todo.forEach((data)=>{
+                              if(data.completed == false){
+                                %>
+                                <tr>
+                                    <td><%- data.name %></td>
+                                    <td><%= moment(data.createdAt).format("MMM Do YY, h:mm:ss a") %></td>
+                                    <td class="">
+                                    <input type="checkbox" data="<%- data._id %>" class="form-check-input check" value="<%- data.completed %>" <%- data.completed==false ? "undefind" : "undefind" %> ></td>
+                                    <td>
+                                        <a href="/api/todo/<%- data._id %>" class="btn btn-info btn-sm">update</a>
+                                        <a href="/api/todo/delete/<%- data._id %>" target="_self" class="btn btn-danger btn-sm" 
+                                          onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+                                    </td>
+                                </tr>
+                              <%
+
+                            }})
+                            %>
+                            <tr>
+                              <td><h5 class="text-success">Completed Task</h5></td>
+                                <th colspan="3">Updated Date</th>
+                              </tr>
+                            <% todo.forEach((data)=>{
+                              if(data.completed == true){
+                                %>
+                                  <tr>
+                                    <td><%- data.name %></td>
+                                    <td><%= moment(data.updatedAt).format("MMM Do YY, h:mm:ss a") %></td>
+                                    <td class="">
+                                    <input type="checkbox" data="<%- data._id %>" class="form-check-input check" value="<%- data.completed %>" <%- data.completed==true ? "checked" : "undefind"  %> ></td>
+                                    <td>
+                                        <a href="/api/todo/<%- data._id %>" class="btn btn-info btn-sm">update</a>
+                                        <a href="/api/todo/delete/<%- data._id %>" target="_self" class="btn btn-danger btn-sm" 
+                                          onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+                                    </td>
+                                </tr>
+                                <%
+
+                              }
+                            })%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div id="UpdateModel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content bg-white">
+        <div class="modal-header bg-success">
+          <h4 class="modal-title text-white font-weight-bold">Task</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <h6>Do you want to Complete this task , please go ahead</h6>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm close" data-dismiss="modal">Complete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+
+
+  
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+
+
+
